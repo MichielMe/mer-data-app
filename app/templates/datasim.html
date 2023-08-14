@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block title %}Materials{% endblock %} {% block
+content %}
+
+<div class="container text-center">
+  <h1 class="display-1 p-4">Database SIM</h1>
+  <p class="display-7">
+    Dit is een simulatie van de MER database. Klik op onderstaande knop om de
+    database terug te vullen na gebruik van de applicatie.
+  </p>
+  <div class="container p-5">
+    <form action="/populate-db" method="post">
+      <input
+        type="submit"
+        value="Populate Database"
+        class="btn btn-dark mb-2"
+      />
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div
+        class="alert alert-{{ category }} alert-dismissible fade show"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+    </form>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h2 class="p-2">Material ID's</h2>
+      <ul class="list-group">
+        {% for material in materials %}
+        <li class="list-group-item">{{ material.material_id }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col">
+      <h2 class="p-2">Material Types</h2>
+      <ul class="list-group">
+        {% for material in materials %}
+        <li class="list-group-item">{{ material.material_type }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col">
+      <h2 class="p-2">Title</h2>
+      <ul class="list-group">
+        {% for material in materials %}
+        <li class="list-group-item">{{ material.title }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
