@@ -17,6 +17,7 @@ content %}
       <div class="alert alert-danger">{{ form.file.errors|join(', ') }}</div>
       {% endif %}
     </div>
+    
     <div class="form-group mb-3">
       {{ form.replace_text.label }} {{ form.replace_text(class="form-control mt-2") }}
     </div>
@@ -30,6 +31,17 @@ content %}
     <div class="form-group mb-3">
       {{ form.submit(class="btn btn-primary mt-2") }}
     </div>
+    <!-- Display Material IDs to be Updated -->
+    {% if material_ids %}
+    <div class="mt-4">
+      <h4>Materials to be Updated:</h4>
+      <ul>
+        {% for id in material_ids %}
+        <li>{{ id }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
     <div>
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
         messages %} {% for category, message in messages %}
