@@ -2,7 +2,7 @@
 content %}
 <h2 class="display-3 pb-5 text-center">Bulk Edit MER Data</h2>
 <div class="row">
-  <form method="POST" enctype="multipart/form-data">
+  <form method="POST" enctype="multipart/form-data" id="myForm">
     {{ form.hidden_tag() }}
     <div class="form-group mb-3">
       <label for="formFile" class="form-label"> {{ form.file.label }} </label>
@@ -18,6 +18,9 @@ content %}
       {% endif %}
     </div>
     <div class="form-group mb-3">
+      {{ form.replace_text.label }} {{ form.replace_text(class="form-control mt-2") }}
+    </div>
+    <div class="form-group mb-3">
       {{ form.suffix.label }} {{ form.suffix(class="form-control mt-2") }}
     </div>
     <div class="form-group mb-3">
@@ -27,6 +30,34 @@ content %}
     <div class="form-group mb-3">
       {{ form.submit(class="btn btn-primary mt-2") }}
     </div>
+    <div>
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %}
+        <div
+          class="alert alert-{{ category }} alert-dismissible fade show"
+          role="alert"
+        >
+          {{ message }} </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+    </div>
   </form>
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const myForm = document.getElementById('myForm');
+    
+    myForm.addEventListener('submit', function(event) {
+      const isConfirmed = window.confirm('Are you sure you want to commit the changes to the database?');
+      
+      if (!isConfirmed) {
+        event.preventDefault();
+      }
+    });
+  });
+</script>
 {% endblock %}
+
+
+

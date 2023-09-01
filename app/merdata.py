@@ -1,12 +1,7 @@
-from flask import Blueprint, render_template, Flask, request
 from flask_wtf import FlaskForm
 from wtforms import FileField, StringField, SelectField, SubmitField
 from wtforms.validators import DataRequired
 from flask_wtf.file import FileRequired, FileAllowed
-from . import db
-import openpyxl
-
-# merdata = Blueprint("merdata", __name__)
 
 
 class UploadForm(FlaskForm):
@@ -20,6 +15,7 @@ class UploadForm(FlaskForm):
     suffix = StringField(
         "Wat wil je toevoegen aan de titel?", validators=[DataRequired()]
     )
+    replace_text = StringField("Te vervangen tekst: (laat leeg als je alleen iets wilt toevoegen aan de tekst.)")  # New field
     material_type = SelectField(
         "Material Type",
         choices=[

@@ -3,7 +3,6 @@ from . import db
 from .models import Material, populate_db
 from .merdata import UploadForm
 import pandas as pd
-import openpyxl
 
 views = Blueprint("views", __name__)
 
@@ -25,11 +24,16 @@ def index():
         ).all()
 
         # 3. Modify the title and material type columns
+        replace_text = form.replace_text.data
         suffix = form.suffix.data
         material_type = form.material_type.data
 
         for material in materials_to_update:
-            material.title += " " + suffix
+            if replace_text:
+                material.title = material.title.replace(replace_text, suffix)
+            else:
+                material.title += " " + suffix
+
             material.material_type = material_type
 
         # 4. Commit changes to the database
@@ -39,6 +43,10 @@ def index():
         return redirect(url_for("views.index"))
 
     return render_template("index.html", form=form)
+
+
+
+
 
 
 @views.route("/datasim")
@@ -54,3 +62,4 @@ def populate_database():
     populate_db()
     flash("Database succesful reset!", "success")
     return redirect(url_for("views.datasim"))
+
